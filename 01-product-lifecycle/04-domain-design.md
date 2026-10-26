@@ -17,8 +17,11 @@ Thống nhất hệ thống quản lý những gì, chúng liên quan thế nào
 2. **Quan hệ:** xác định đối tượng nào liên quan, phụ thuộc hoặc tồn tại độc lập. Khi sửa hay xóa một đối tượng, đối tượng khác bị ảnh hưởng thế nào?
 3. **Vòng đời và quy tắc:** làm rõ trạng thái, điều kiện chuyển trạng thái và điều kiện luôn phải đúng. Đối chiếu Requirements, đưa điểm chưa rõ cho người dùng quyết định.
 4. **Trách nhiệm:** xác định nhóm chức năng quản lý đối tượng và xử lý quy tắc nào, nếu cần phân nhóm. Đi qua luồng chính để kiểm tra trách nhiệm bị thiếu hoặc trùng.
+5. **Kiểm tra mô hình:** AI đi qua một luồng chính và 1–2 tình huống dễ gây mâu thuẫn liên quan đến phạm vi đã chốt, chẳng hạn xóa đối tượng đang có dữ liệu phụ thuộc. Đối chiếu Requirements trước; chỉ hỏi người dùng về quy tắc còn thiếu hoặc mâu thuẫn. Không tự thêm chức năng để xử lý tình huống giả định. Quy tắc được chốt cập nhật tại nguồn yêu cầu; sơ đồ tham chiếu hoặc tóm tắt, tránh tạo nguồn quy tắc thứ hai.
 
 Chỉ mô hình hóa phần phục vụ phạm vi đã chốt. Chưa cần thiết kế chi tiết bảng, class, API hoặc quyết định tách service.
+
+**Ranh giới đã chốt sau phỏng vấn:** nhóm trách nhiệm ở đây là nhóm nghiệp vụ, không phải service kỹ thuật. Đầu ra gồm khái niệm, quan hệ, trạng thái/quy tắc và trách nhiệm nghiệp vụ; đây là đầu vào để Architecture quyết định cách tổ chức hệ thống và chia service. Hai nhóm nghiệp vụ khác nhau không tự động trở thành hai microservice.
 
 ## Ví dụ minh họa
 
@@ -39,8 +42,10 @@ Quy tắc xóa cần được cập nhật lại vào Requirements cùng tiêu c
 
 Một mục “Mô hình nghiệp vụ” ngắn chứa khái niệm, quan hệ, trạng thái và quy tắc quan trọng, nhóm trách nhiệm nếu cần, cùng các điểm còn mở. Tham chiếu yêu cầu đã có thay vì sao chép toàn bộ.
 
-- CRUD đơn giản, ít quan hệ: ghi trong `REQUIREMENTS.md`.
-- Nhiều đối tượng, trạng thái hoặc quy tắc chéo: có thể tách tài liệu domain và thêm sơ đồ khi hữu ích.
+**Dạng đầu ra đã chốt sau phỏng vấn:** sơ đồ nghiệp vụ đơn giản kèm ghi chú ngắn. Box biểu diễn khái niệm, đường nối có nhãn biểu diễn quan hệ; ghi chú giải thích thuật ngữ, trạng thái và quy tắc quan trọng. Ghi trách nhiệm nghiệp vụ khi cần. Sơ đồ mô tả hệ thống quản lý gì và quan hệ giữa chúng, không phải flow thứ tự công việc của Product Planning. Chỉ thể hiện phần phục vụ chức năng sắp triển khai, bổ sung dần.
+
+- CRUD đơn giản, ít quan hệ: đặt sơ đồ và ghi chú trong `REQUIREMENTS.md`.
+- Nhiều đối tượng, trạng thái hoặc quy tắc chéo: có thể tách tài liệu domain chứa sơ đồ và ghi chú, tham chiếu Requirements.
 
 ## Phân công người và AI
 
@@ -53,6 +58,7 @@ Một mục “Mô hình nghiệp vụ” ngắn chứa khái niệm, quan hệ,
 - [ ] Khái niệm chính được hiểu thống nhất.
 - [ ] Quan hệ và quy tắc quan trọng của nhóm chức năng sắp làm đã rõ.
 - [ ] Luồng chính có trách nhiệm xử lý rõ ràng.
+- [ ] Đã kiểm tra mô hình bằng một luồng chính và 1–2 tình huống liên quan; quy tắc mới được chốt đã cập nhật vào nguồn yêu cầu.
 - [ ] Không còn mâu thuẫn lớn với Requirements; điểm chưa rõ ảnh hưởng triển khai đã được giải quyết.
 
 **Lỗi thường gặp:** thêm đối tượng phục vụ chức năng chưa có; mặc định mỗi đối tượng là một service; thiết kế dữ liệu quá chi tiết trước khi hiểu nghiệp vụ; giữ quy tắc khác nhau trong nhiều tài liệu.
